@@ -3,15 +3,14 @@
 Quick test that opencv is working on your gumstix or anywhere I suppose, but
 really just to test OE installation of the proper tools.
 
+
 ## Warning
 
-I don't like how OE chooses to package up the opencv stuff and when I choose
-the opencv-dev I expect to get both headers and libraries or its just not that
-useful. But that's just an opinion, though I've yet to meet another developer
-that wasn't equally suprised the the *-dev package doesn't really let you do
-any development.
+I don't particularly like the way the OE developers chose to package the opencv 
+stuff. I use a modified opencv recipe so that opencv-dev installs both headers 
+and libraries. I have no use for any opencv code samples on a gumstix.
 
-So here's my patch to the recipes/opencv/opencv_svn.bb recipe
+So here's my one-liner patch to the recipes/opencv/opencv_svn.bb recipe
 
 ### make-opencv-dev-useful.patch
 
@@ -28,6 +27,10 @@ So here's my patch to the recipes/opencv/opencv_svn.bb recipe
 	 
 	 ALLOW_EMPTY_${PN} = "1"
 
+You don't have to use it. I think the official way to get development headers and
+libraries is to install both opencv-dev and opencv-samples, but I'm not sure. 
+(TODO: check on this)
+
 
 ## Install
 
@@ -37,11 +40,13 @@ your image recipe. This is assuming the modified opencv-dev patch above.
 	task-native-sdk
 	opencv-dev
 
+Without my patch, add opencv-samples too. (I think)
 
 There is a minimal based image called opencv-image.bb in the oe-stuff directory
-you can use for a quick test.
+of this project you can use for a quick test.
 
 Copy that to your recipes/images/ directory and build it for your rootfs.
+
 
 ## Test
 
@@ -56,14 +61,13 @@ Then
 
 	root@overo:~/opencv-test# make
 	gcc -Wall -Wno-unused-function `pkg-config opencv --cflags` `pkg-config opencv --libs` flip.c -o flip
-	root@overo:~/opencv-test# ./flip
 
+	root@overo:~/opencv-test# ./flip
 	Loading image
 	Flipping image
 	Saving flipped image
 
 The result is the opencv.jpg flipped horizontally and saved as flipped.jpg
-
 
 
 
