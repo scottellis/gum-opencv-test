@@ -59,10 +59,10 @@ it directly.
 
 Then
 
-	root@overo:~/opencv-test# make
+	root@overo:~/gum-opencv-test# make
 	gcc -Wall -Wno-unused-function `pkg-config opencv --cflags` `pkg-config opencv --libs` flip.c -o flip
 
-	root@overo:~/opencv-test# ./flip
+	root@overo:~/gum-opencv-test# ./flip
 	Loading image
 	Flipping image
 	Saving flipped image
